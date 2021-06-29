@@ -113,9 +113,13 @@ resource "aws_cloudfront_distribution" "three-oh-one" {
     minimum_protocol_version = "TLSv1.2_2019"
   }
 
-  logging_config {
-    include_cookies = false
-    bucket          = var.logging_bucket
-    prefix          = var.logging_prefix
+  # Only enable the logging config if a bucket is provided
+  dynamic "logging_config" {
+    for_each = var.logging_bucket == "" ? [] : [1]
+    content {
+      include_cookies = false
+      bucket          = var.logging_bucket
+      prefix          = var.logging_prefix
+    }
   }
 }
