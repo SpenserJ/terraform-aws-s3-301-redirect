@@ -1,5 +1,12 @@
-variable "sources" {}
-variable "target" {}
+variable "sources" {
+  type        = map(string)
+  description = "A map of domains to redirect, keyed by the domain with a value of the Zone ID."
+}
+
+variable "target" {
+  type        = string
+  description = "The domain to redirect the sources to."
+}
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution#bucket
 variable "logging_bucket" {
